@@ -6,7 +6,6 @@ import importlib.util
 import sys
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Optional
 
 
 @dataclass
@@ -41,7 +40,7 @@ def _should_skip(path: Path, script_path: Path) -> bool:
 
 def check_directory(
     root: Path,
-    extra_paths: Optional[list[Path]] = None,
+    extra_paths: list[Path] | None = None,
     glob: str = "**/*.py",
 ) -> CheckResult:
     """
