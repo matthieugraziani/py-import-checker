@@ -21,6 +21,20 @@ py-import-checker src/ --src src/
 
 ---
 
+## Architectural Pain Points & Technical Approach
+The Problem Analysis
+Within complex Python architectures (whether large-scale monoliths or microservices), maintaining the integrity of the internal and external dependency graph presents continuous engineering challenges (such as module refactoring, dependency obsolescence, or configuration drift in project layouts). Traditionally, these anomalies manifest through three critical vectors:
+
+CI/CD Pipeline Infiltration: ModuleNotFoundError or ImportError exceptions are frequently detected only at the very end of the validation pipeline—after time-consuming provisioning and environment setup steps—resulting in wasted computation time (CI runner hours).
+
+Runtime Blindspots: If a broken import path resides within a rarely executed module or one that lacks unit test coverage, the flaw is promoted straight to production, causing critical, unexpected crashes at runtime.
+
+Operational Overhead of Legacy Tooling: Running full-blown linters or executing the entire test suite solely to verify architectural link resolvability introduces unacceptable latency into the developers' local feedback loop.
+
+The Technical Solution
+py-import-checker introduces a decoupled, ultra-fast validation layer. By isolating the specification loading of each module without triggering the execution of its underlying business logic, the tool performs a hermetic analysis of the import graph. It actively filters out runtime-state exceptions to surgically and exhaustively isolate structural import health failures alone.
+
+---
 ## Features
 
 - **Zero dependencies** — uses only the Python standard library (`importlib`, `pathlib`, `sys`)
