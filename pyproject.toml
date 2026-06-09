@@ -88,6 +88,9 @@ select = ["E", "F", "I", "UP", "B", "SIM", "PL", "RUF"]
 ignore = ["E501"]
 fixable = ["ALL"]
 
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["PLR2004"]   # Magic values are common and acceptable in tests
+
 [tool.mypy]
 python_version = "3.10"
 strict = true

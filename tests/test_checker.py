@@ -9,6 +9,18 @@ from py_import_checker.checker import check_directory
 from py_import_checker.cli import main
 
 # ---------------------------------------------------------------------------
+# Test constants (évite les magic numbers → PLR2004)
+# ---------------------------------------------------------------------------
+
+EXPECTED_SUCCESS_CHECKED = 2
+EXPECTED_MULTIPLE_ERRORS = 2
+EXPECTED_MULTIPLE_CHECKED = 3
+EXPECTED_CLI_SUCCESS = 0
+EXPECTED_CLI_FAILURE = 1
+EXPECTED_CLI_ERROR = 2   # Convention courante pour "command line usage error"
+
+
+# ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------
 
@@ -32,7 +44,7 @@ def test_clean_project(tmp_path: Path) -> None:
     result = check_directory(tmp_path)
 
     assert result.success
-    assert result.checked == 2
+    assert result.checked == EXPECTED_SUCCESS_CHECKED
     assert result.errors == []
 
 
@@ -77,8 +89,8 @@ def test_multiple_errors(tmp_path: Path) -> None:
     result = check_directory(tmp_path)
 
     assert not result.success
-    assert len(result.errors) == 2
-    assert result.checked == 3
+    assert len(result.errors) == EXPECTED_MULTIPLE_ERRORS
+    assert result.checked == EXPECTED_MULTIPLE_CHECKED
 
 
 # ---------------------------------------------------------------------------
@@ -89,18 +101,18 @@ def test_multiple_errors(tmp_path: Path) -> None:
 def test_cli_success(tmp_path: Path) -> None:
     write_py(tmp_path, "ok.py", "x = 42\n")
     code = main([str(tmp_path)])
-    assert code == 0
+    assert code == EXPECTED_CLI_SUCCESS
 
 
 def test_cli_failure(tmp_path: Path) -> None:
     write_py(tmp_path, "bad.py", "import _nope_cli\n")
     code = main([str(tmp_path)])
-    assert code == 1
+    assert code == EXPECTED_CLI_FAILURE
 
 
 def test_cli_missing_path(tmp_path: Path) -> None:
     code = main([str(tmp_path / "does_not_exist")])
-    assert code == 2
+    assert code == EXPECTED_CLI_ERROR
 
 
 def test_cli_src_flag(tmp_path: Path) -> None:
@@ -110,4 +122,4 @@ def test_cli_src_flag(tmp_path: Path) -> None:
     write_py(tmp_path, "consumer.py", "from mylib import VALUE\n")
 
     code = main([str(tmp_path), "--src", str(src)])
-    assert code == 0
+    assert code == EXPECTED_CLI_SUCCESS
