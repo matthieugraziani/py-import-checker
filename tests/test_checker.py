@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-import textwrap
 from pathlib import Path
+import textwrap
 
 from py_import_checker.checker import check_directory
 from py_import_checker.cli import main

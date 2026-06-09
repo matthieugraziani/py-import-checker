@@ -3,9 +3,9 @@
 from __future__ import annotations
 
 import importlib.util
+import sys
 from dataclasses import dataclass, field
 from pathlib import Path
-import sys
 
 
 
