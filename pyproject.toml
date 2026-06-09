@@ -1,27 +1,31 @@
 [build-system]
-requires = ["hatchling"]
+requires = ["hatchling>=1.27"]
 build-backend = "hatchling.build"
 
 [project]
 name = "py-import-checker"
-version = "0.1.0"
+version = "0.2.0"                    # ← mis à jour
 description = "Fast, zero-dependency Python import health scanner"
 readme = "README.md"
 license = { text = "MIT" }
-authors = [{ name = "matthieugraziani" }]
+authors = [{ name = "Matthieu Graziani", email = "matthieu.graziani@proton.me" }]  # ← recommandé
 requires-python = ">=3.9"
-keywords = ["imports", "linting", "static-analysis", "debugging", "developer-tools"]
+keywords = ["imports", "linting", "static-analysis", "debugging", "developer-tools", "cli", "import-checker"]
 classifiers = [
-    "Development Status :: 3 - Alpha",
+    "Development Status :: 4 - Beta",           # ← passé en Beta
     "Environment :: Console",
     "Intended Audience :: Developers",
     "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3 :: Only",
     "Topic :: Software Development :: Libraries :: Python Modules",
     "Topic :: Software Development :: Quality Assurance",
+    "Topic :: Software Development :: Testing",
 ]
 
 [project.scripts]
@@ -31,23 +35,72 @@ py-import-checker = "py_import_checker.cli:main"
 Homepage = "https://github.com/matthieugraziani/py-import-checker"
 Repository = "https://github.com/matthieugraziani/py-import-checker"
 Issues = "https://github.com/matthieugraziani/py-import-checker/issues"
+Changelog = "https://github.com/matthieugraziani/py-import-checker/blob/main/CHANGELOG.md"
+
+# === Hatch Configuration ===
+[tool.hatch.version]
+path = "src/py_import_checker/__init__.py"   # recommande cette approche (version centralisée)
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/py_import_checker"]
 
+[tool.hatch.build.targets.sdist]
+include = [
+    "src/py_import_checker",
+    "tests",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md",
+]
+
+# === Environments ===
+[tool.hatch.envs.default]
+dependencies = [
+    "pytest>=8.0",
+    "pytest-cov>=6.0",
+    "mypy>=1.10",
+    "ruff>=0.9",
+]
+
+[tool.hatch.envs.default.scripts]
+lint = "ruff check src/ tests/"
+format = "ruff format src/ tests/"
+type-check = "mypy src/"
+test = "pytest --cov=py_import_checker --cov-report=term-missing"
+test-all = ["lint", "type-check", "test"]
+all = ["format", "lint", "type-check", "test"]
+
+[tool.hatch.envs.dev]
+dependencies = [
+    "pytest>=8.0",
+    "pytest-cov>=6.0",
+    "mypy>=1.10",
+    "ruff>=0.9",
+]
+
+# === Tooling Config ===
 [tool.ruff]
 line-length = 100
 target-version = "py39"
 
 [tool.ruff.lint]
-select = ["E", "F", "I", "UP", "B", "SIM"]
+select = ["E", "F", "I", "UP", "B", "SIM", "PL", "RUF"]
 ignore = ["E501"]
+fixable = ["ALL"]
 
 [tool.mypy]
 python_version = "3.10"
 strict = true
 ignore_missing_imports = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-addopts = "-v --tb=short"
+addopts = "-v --tb=short --cov=py_import_checker --cov-report=term-missing"
+python_files = ["test_*.py", "*_test.py"]
+
+# Optionnel : Coverage
+[tool.coverage.run]
+source = ["py_import_checker"]
+omit = ["tests/*", "src/py_import_checker/__main__.py"]
