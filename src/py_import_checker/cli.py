@@ -22,6 +22,9 @@ def _banner() -> None:
 
 
 def _print_result(result: CheckResult, verbose: bool) -> None:
+    if verbose:
+        print(f"{DIM}Verbose mode enabled.{RESET}\n")
+
     if result.errors:
         print(f"{YELLOW}{'─' * 50}{RESET}")
         for err in result.errors:

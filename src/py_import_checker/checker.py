@@ -89,7 +89,7 @@ def check_directory(
                     message=str(exc),
                 )
             )
-        except Exception:
+        except Exception:  # pylint: disable=broad-exception-caught
             # Ignore pure runtime errors — only structural import issues matter.
             pass
 
