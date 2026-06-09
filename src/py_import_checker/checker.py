@@ -8,8 +8,6 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 
-
-
 @dataclass
 class ImportFailure:
     """Represents a single import failure."""
