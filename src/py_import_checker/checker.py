@@ -80,7 +80,7 @@ def check_directory(
             if spec and spec.loader:
                 module = importlib.util.module_from_spec(spec)
                 sys.modules[module_name] = module
-                spec.loader.exec_module(module)  # type: ignore[union-attr]
+                spec.loader.exec_module(module)
         except (ModuleNotFoundError, ImportError) as exc:
             result.errors.append(
                 ImportFailure(

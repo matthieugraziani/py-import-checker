@@ -6,7 +6,7 @@ import argparse
 import sys
 from pathlib import Path
 
-from .checker import check_directory
+from .checker import CheckResult, check_directory
 
 RESET = "\033[0m"
 BOLD = "\033[1m"
@@ -21,7 +21,7 @@ def _banner() -> None:
     print(f"\n{BOLD}{CYAN}py-import-checker{RESET}  —  Python import health scanner\n")
 
 
-def _print_result(result, verbose: bool) -> None:
+def _print_result(result: CheckResult, verbose: bool) -> None:
     if result.errors:
         print(f"{YELLOW}{'─' * 50}{RESET}")
         for err in result.errors:
