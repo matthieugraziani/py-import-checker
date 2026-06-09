@@ -26,8 +26,8 @@ jobs:
       - name: Install package (editable)
         run: pip install -e ".[dev]"
 
-      - name: Install linting tools
-        run: pip install ruff mypy
+      - name: Install test tools
+        run: pip install pytest mypy ruff
 
       - name: Lint with ruff
         run: ruff check src/ tests/
