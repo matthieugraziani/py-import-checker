@@ -14,7 +14,7 @@
       <img src="https://img.shields.io/pypi/v/py-import-checker.svg" alt="PyPI version">
     </a>
     <a href="https://github.com/matthieugraziani/py-import-checker/actions">
-      <img src="https://github.com/matthieugraziani/py-import-checker/actions/workflows/python-app.yml/badge.svg" alt="Tests">
+      <img src="https://github.com/matthieugraziani/py-import-checker/actions/workflows/ci.yml/badge.svg" alt="Tests">
     </a>
     <a href="https://opensource.org/licenses/MIT">
       <img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT">
