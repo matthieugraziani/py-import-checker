@@ -1,4 +1,12 @@
-# py-import-checker
+# <p align=center>py-import-checker<p>
+
+<p align=center>
+
+[![PyPI version](https://img.shields.io/pypi/v/py-import-checker.svg)](https://pypi.org/project/py-import-checker/)
+[![Tests](https://github.com/matthieugraziani/py-import-checker/actions/workflows/python-app.yml/badge.svg)](https://github.com/matthieugraziani/py-import-checker/actions)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+</p>
 
 **Fast, zero-dependency Python import health scanner.**
 
