@@ -1,18 +1,29 @@
-# <p align=center>py-import-checker<p>
+<p align="center">
+  <h1 align="center">py-import-checker</h1>
+  <p align="center">
+    <strong>Fast, zero-dependency Python import health scanner.</strong>
+  </p>
 
-<p align=center>
+  <p align="center">
+    Recursively scan any Python project and instantly surface every broken or missing import — 
+    <strong>before your tests run, before CI fails, before runtime surprises you.</strong>
+  </p>
 
-[![PyPI version](https://img.shields.io/pypi/v/py-import-checker.svg)](https://pypi.org/project/py-import-checker/)
-[![Tests](https://github.com/matthieugraziani/py-import-checker/actions/workflows/python-app.yml/badge.svg)](https://github.com/matthieugraziani/py-import-checker/actions)
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-
+  <p align="center">
+    <a href="https://pypi.org/project/py-import-checker/">
+      <img src="https://img.shields.io/pypi/v/py-import-checker.svg" alt="PyPI version">
+    </a>
+    <a href="https://github.com/matthieugraziani/py-import-checker/actions">
+      <img src="https://github.com/matthieugraziani/py-import-checker/actions/workflows/python-app.yml/badge.svg" alt="Tests">
+    </a>
+    <a href="https://opensource.org/licenses/MIT">
+      <img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT">
+    </a>
+    <img src="https://img.shields.io/badge/Python-3.10%2B-blue" alt="Python 3.10+">
+  </p>
 </p>
 
-**Fast, zero-dependency Python import health scanner.**
-
-Recursively scan any Python project and instantly surface every broken or missing import — before your tests run, before CI fails, before runtime surprises you.
-
-```
+```text
 py-import-checker src/ --src src/
 
   py-import-checker  —  Python import health scanner
@@ -25,24 +36,9 @@ py-import-checker src/ --src src/
 
 ──────────────────────────────────────────────────
 ✗ 1 broken import(s) found in 14 file(s) scanned.
+
 ```
 
----
-
-## Architectural Pain Points & Technical Approach
-The Problem Analysis
-Within complex Python architectures (whether large-scale monoliths or microservices), maintaining the integrity of the internal and external dependency graph presents continuous engineering challenges (such as module refactoring, dependency obsolescence, or configuration drift in project layouts). Traditionally, these anomalies manifest through three critical vectors:
-
-CI/CD Pipeline Infiltration: ModuleNotFoundError or ImportError exceptions are frequently detected only at the very end of the validation pipeline—after time-consuming provisioning and environment setup steps—resulting in wasted computation time (CI runner hours).
-
-Runtime Blindspots: If a broken import path resides within a rarely executed module or one that lacks unit test coverage, the flaw is promoted straight to production, causing critical, unexpected crashes at runtime.
-
-Operational Overhead of Legacy Tooling: Running full-blown linters or executing the entire test suite solely to verify architectural link resolvability introduces unacceptable latency into the developers' local feedback loop.
-
-The Technical Solution
-py-import-checker introduces a decoupled, ultra-fast validation layer. By isolating the specification loading of each module without triggering the execution of its underlying business logic, the tool performs a hermetic analysis of the import graph. It actively filters out runtime-state exceptions to surgically and exhaustively isolate structural import health failures alone.
-
----
 ## Features
 
 - **Zero dependencies** — uses only the Python standard library (`importlib`, `pathlib`, `sys`)
@@ -52,7 +48,6 @@ py-import-checker introduces a decoupled, ultra-fast validation layer. By isolat
 - **CI-friendly** — exits with code `1` on any broken import, `0` on success
 - **Self-checking** — the CI pipeline scans itself with `py-import-checker`
 
----
 
 ## Installation
 
@@ -67,8 +62,6 @@ git clone https://github.com/matthieugraziani/py-import-checker
 cd py-import-checker
 pip install -e .
 ```
-
----
 
 ## Usage
 
@@ -131,26 +124,20 @@ repos:
     py-import-checker . --src src/
 ```
 
----
+
 
 ## How it works
 
-For every `.py` file found under the target directory, `py-import-checker` uses
-`importlib.util.spec_from_file_location` to load and execute the module in an
-isolated namespace. If execution raises `ImportError` or `ModuleNotFoundError`,
-the failure is recorded. All other exceptions (runtime errors, missing variables,
-etc.) are silently ignored — the tool focuses exclusively on **structural import
-health**.
+py-import-checker utilise importlib.util.spec_from_file_location pour charger chaque fichier .py dans un namespace isolé. Seules les erreurs d’import sont capturées — tout le reste (erreurs runtime, variables manquantes, etc.) est ignoré.
 
----
 
-## Exit codes
+## Roadmap (suggestions)
 
-| Code | Meaning |
-|------|---------|
-| `0`  | All imports resolved successfully |
-| `1`  | One or more broken imports found |
-| `2`  | Invalid arguments (e.g. path does not exist) |
+- Mode --fix (suggestions d’imports)
+- Support des packages namespace (__init__.py moins strict)
+- Intégration VS Code / LSP
+- Rapport HTML / JSON
+- Détection de circular imports (optionnel)
 
 ---
 
@@ -172,6 +159,20 @@ mypy src/
 
 ---
 
-## License
+## License - MIT
 
-MIT — see [LICENSE](LICENSE).
+Auteur : Matthieu Graziani
+```text
+### Améliorations apportées
+- En-tête centré + badges propres
+- Démo plus visible
+- Sections plus aérées
+- Roadmap ajoutée (pour montrer l’évolution)
+- Meilleure lisibilité
+
+### Actions prioritaires maintenant
+1. **Publier sur PyPI** (version 0.1.0 ou 0.2.0) :
+   ```bash
+   hatch build
+   hatch publish
+```
