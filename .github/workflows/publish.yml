@@ -2,7 +2,7 @@ name: Publish to PyPI
 
 on:
   release:
-    types: [published] # Le build se déclenche automatiquement à chaque nouvelle "Release" sur GitHub
+    types: [published]
 
 jobs:
   pypi-publish:
@@ -15,9 +15,21 @@ jobs:
       id-token: write  # Crucial pour le Trusted Publishing
     steps:
       - uses: actions/checkout@v4
-      - name: Set up hatch
-        uses: pypa/hatch-install@v1
+      
+      # 1. Installation de Python standard
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12' # Utilisez la version que vous préférez
+      
+      # 2. Installation de Hatch
+      - name: Install Hatch
+        run: pip install hatch
+        
+      # 3. Build du projet
       - name: Build
         run: hatch build
+        
+      # 4. Publication sur PyPI via Trusted Publishing
       - name: Publish
         uses: pypa/gh-action-pypi-publish@release/v1
