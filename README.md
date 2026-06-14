@@ -104,12 +104,12 @@ if not result.success:
 ```
 
 ### Pre-commit hook
-Ajoutez ceci à votre fichier .pre-commit-config.yaml :
+Add this to your `.pre-commit-config.yaml`:
 ```yaml
 # .pre-commit-config.yaml
 repos:
   - repo: https://github.com/matthieugraziani/py-import-checker
-    rev: v0.1.0
+    rev: v0.2.2
     hooks:
       - id: py-import-checker
         args: [--src, src/]
@@ -128,7 +128,7 @@ repos:
 
 ## How it works
 
-py-import-checker utilise importlib.util.spec_from_file_location pour charger chaque fichier .py dans un namespace isolé. Seules les erreurs d’import sont capturées — tout le reste (erreurs runtime, variables manquantes, etc.) est ignoré.
+py-import-checker uses `importlib.util.spec_from_file_location` to load each `.py` file in an isolated namespace. Only import errors are captured — everything else (runtime exceptions, missing variables, etc.) is ignored.
 
 
 ## Roadmap (suggestions)
@@ -171,7 +171,7 @@ Auteur : Matthieu Graziani
 - Meilleure lisibilité
 
 ### Actions prioritaires maintenant
-1. **Publier sur PyPI** (version 0.1.0 ou 0.2.0) :
+1. **Publier sur PyPI** (version 0.2.2) :
    ```bash
    hatch build
    hatch publish
