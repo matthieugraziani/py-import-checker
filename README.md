@@ -109,7 +109,7 @@ Add this to your `.pre-commit-config.yaml`:
 # .pre-commit-config.yaml
 repos:
   - repo: https://github.com/matthieugraziani/py-import-checker
-    rev: v0.2.2
+    rev: v0.2.3
     hooks:
       - id: py-import-checker
         args: [--src, src/]
