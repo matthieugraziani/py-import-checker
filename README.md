@@ -104,7 +104,7 @@ if not result.success:
 ```
 
 ### Pre-commit hook
-
+Ajoutez ceci à votre fichier .pre-commit-config.yaml :
 ```yaml
 # .pre-commit-config.yaml
 repos:
