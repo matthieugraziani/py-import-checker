@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "py-import-checker"
-version = "0.2.0"                    # ← mis à jour
+dynamic = ["version"]                   # ← mis à jour
 description = "Fast, zero-dependency Python import health scanner"
 readme = "README.md"
 license = { text = "MIT" }

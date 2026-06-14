@@ -171,7 +171,7 @@ Auteur : Matthieu Graziani
 - Meilleure lisibilité
 
 ### Actions prioritaires maintenant
-1. **Publier sur PyPI** (version 0.2.2) :
+1. **Publier sur PyPI** (version 0.2.3) :
    ```bash
    hatch build
    hatch publish
