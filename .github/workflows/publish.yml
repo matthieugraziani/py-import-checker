@@ -12,24 +12,20 @@ jobs:
       name: pypi
       url: https://pypi.org/p/py-import-checker
     permissions:
-      id-token: write  # Crucial pour le Trusted Publishing
+      id-token: write  # Requis pour le Trusted Publishing
     steps:
       - uses: actions/checkout@v4
       
-      # 1. Installation de Python standard
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.12' # Utilisez la version que vous préférez
+          python-version: '3.12'
       
-      # 2. Installation de Hatch
       - name: Install Hatch
         run: pip install hatch
         
-      # 3. Build du projet
       - name: Build
         run: hatch build
         
-      # 4. Publication sur PyPI via Trusted Publishing
       - name: Publish
         uses: pypa/gh-action-pypi-publish@release/v1
