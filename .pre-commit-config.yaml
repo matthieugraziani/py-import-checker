@@ -1,0 +1,33 @@
+# Voir https://pre-commit.com pour plus d'infos
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-added-large-files
+
+  # Utilisation de Ruff, le standard actuel pour le linting et formattage
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.4.8
+    hooks:
+      - id: ruff
+        args: [--fix, --exit-non-zero-on-fix]
+      - id: ruff-format
+
+  # Optionnel : Vérification du typage statique
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.10.0
+    hooks:
+      - id: mypy
+        additional_dependencies: [pydantic] # Ajoutez ici vos dépendances si nécessaire
+
+  # Intégrez votre propre outil une fois qu'il est installable
+  # - repo: local
+  #   hooks:
+  #     - id: py-import-checker
+  #       name: py-import-checker
+  #       entry: py-import-checker
+  #       language: python
+  #       types: [python]
