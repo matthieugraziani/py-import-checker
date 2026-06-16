@@ -12,7 +12,7 @@
   
 <p align="center">
   <a href="https://pepy.tech/projects/py-import-checker">
-    <img src="https://static.pepy.tech/personalized-badge/py-import-checker?period=total&units=INTERNATIONAL_SYSTEM&left_color=BLACK&right_color=GREEN&left_text=downloads" alt="PyPI Downloads">
+    <img src="https://static.pepy.tech/personalized-badge/py-import-checker?period=total&units=INTERNATIONAL_SYSTEM&left_color=GRAY&right_color=GREEN&left_text=downloads" alt="PyPI Downloads">
   </a>
    <a href="https://pypi.org/project/py-import-checker/">
       <img src="https://img.shields.io/pypi/v/py-import-checker.svg" alt="PyPI version">
