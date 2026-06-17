@@ -1,5 +1,3 @@
-"""Import verification helpers."""
-
 from __future__ import annotations
 
 import importlib.util
