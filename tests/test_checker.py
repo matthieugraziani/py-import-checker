@@ -1,7 +1,6 @@
 from pathlib import Path
 
 from py_import_checker.checker import check_directory
-from py_import_checker.cli import main
 
 
 def write_py(tmp_path: Path, name: str, content: str) -> None:
