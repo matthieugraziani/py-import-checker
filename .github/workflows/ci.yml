@@ -14,57 +14,28 @@ jobs:
   test:
     name: Python ${{ matrix.python-version }}
     runs-on: ubuntu-latest
+
     strategy:
-      fail-fast: false
       matrix:
         python-version: ["3.10", "3.11", "3.12"]
 
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v5
+      - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
-          cache: "pip"                    # Cache automatique des dépendances
+          cache: pip
 
-      - name: Install Hatch (build + dev tools)
-        run: pip install hatch
-
-      - name: Install project + dev dependencies
-        run: hatch env create
-
-      - name: Lint with Ruff
-        run: hatch run lint
-
-      - name: Type-check with mypy
-        run: hatch run type-check
-
-      - name: Run tests
-        run: hatch run test
+      - run: pip install hatch
+      - run: hatch env create
+      - run: hatch run lint
+      - run: hatch run type-check
+      - run: hatch run test
 
   self-check:
-    name: Self Import Scan
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
 
-      - name: Set up Python 3.12
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-          cache: "pip"
-
-      - name: Install package
-        run: pip install -e .
-
-      - name: Self-scan with py-import-checker
-        run: py-import-checker src/ --src src/
-
-  build:
-    name: Build distribution
-    runs-on: ubuntu-latest
-    needs: test
     steps:
       - uses: actions/checkout@v4
 
@@ -72,13 +43,17 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Install Hatch
-        run: pip install hatch
+      - run: pip install -e .
+      - run: py-import-checker src/ --src src/
 
-      - name: Build package
-        run: hatch build
+  build:
+    needs: test
+    runs-on: ubuntu-latest
 
-      - name: Check distribution
-        run: |
-          pip install twine
-          twine check dist/*
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+
+      - run: pip install hatch
+      - run: hatch build
+      - run: pip install twine && twine check dist/*

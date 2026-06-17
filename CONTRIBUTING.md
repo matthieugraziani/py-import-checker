@@ -1,75 +1,74 @@
-# Contributing to py-import-checker
+# Contributing
 
-Thank you for considering contributing! This document explains how to get started.
-
----
+Thanks for contributing to py-import-checker.
 
 ## Development setup
+
+Clone the repository:
 
 ```bash
 git clone https://github.com/matthieugraziani/py-import-checker
 cd py-import-checker
-pip install -e ".[dev]"
 ```
-
-Add a `[project.optional-dependencies]` section in `pyproject.toml` if you need extra dev deps:
-
-```toml
-[project.optional-dependencies]
-dev = ["pytest", "ruff", "mypy"]
+## Install development dependencies:
+```bash
+pip install hatch
+hatch env create
 ```
-
----
-
 ## Running tests
 
-```bash
-pytest
+Run the test suite:
+```
+hatch run test
 ```
 
-All tests must pass before opening a PR.
+## Linting and type checking
 
----
-
-## Linting & type-checking
-
-```bash
-ruff check src/ tests/
-mypy src/
+Run checks locally:
 ```
-
----
-
+hatch run lint
+hatch run type-check
+```
+To run all checks:
+```
+hatch run all
+```
 ## Commit style
 
-Use [Conventional Commits](https://www.conventionalcommits.org/):
+Conventional Commits are preferred:
 
-| Prefix | When to use |
-|--------|------------|
-| `feat:` | New feature |
-| `fix:` | Bug fix |
-| `docs:` | Documentation only |
-| `test:` | Adding or fixing tests |
-| `refactor:` | Code change without feature/fix |
-| `chore:` | Tooling, CI, dependencies |
+| Prefix | Use for |
+|--------|---------|
+| `feat:` | New features |
+| `fix:` | Bug fixes |
+| `docs:` | Documentation changes |
+| `test:` | Test changes |
+| `refactor:` | Code changes without behavior changes |
+| `chore:` | Tooling and maintenance |
 
-Example: `feat: add --exclude flag to skip specific paths`
+Example:
+```
+feat: add exclude option
+```
 
----
+## Pull requests
 
-## Opening a Pull Request
+Before opening a PR:
+- Keep changes focused.
+- Add tests for behavior changes.
+- Run the local checks:
+```
+hatch run all
+```
+Describe what changed and why in the pull request.
 
-1. Fork the repo and create a branch from `main`.
-2. Make your changes with tests.
-3. Run `ruff`, `mypy`, and `pytest` locally — all must pass.
-4. Open a PR and fill in the template.
+## Reporting issues
 
----
-
-## Reporting bugs
-
-Use the [Bug Report](.github/ISSUE_TEMPLATE/bug_report.md) issue template.
-
-## Requesting features
-
-Use the [Feature Request](.github/ISSUE_TEMPLATE/feature_request.md) issue template.
+For bugs, use the bug report template:
+```
+.github/ISSUE_TEMPLATE/bug_report.md
+```
+For feature requests, use:
+```
+.github/ISSUE_TEMPLATE/feature_request.md
+```
