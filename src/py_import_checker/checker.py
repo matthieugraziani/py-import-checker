@@ -4,8 +4,8 @@ from __future__ import annotations
 
 import importlib.util
 import sys
-from contextlib import contextmanager
 from collections.abc import Iterator
+from contextlib import contextmanager
 from dataclasses import dataclass, field
 from pathlib import Path
 
