@@ -13,9 +13,8 @@ def test_clean_project(tmp_path: Path):
 
     result = check_directory(tmp_path)
 
-    assert result.success
     assert result.checked == 2
-    assert result.errors == []
+    assert result.failures == []
 
 
 def test_missing_import(tmp_path: Path):
@@ -23,9 +22,9 @@ def test_missing_import(tmp_path: Path):
 
     result = check_directory(tmp_path)
 
-    assert not result.success
-    assert len(result.errors) == 1
-    assert result.errors[0].error_type == "ModuleNotFoundError"
+    assert not result.ok
+    assert len(result.failures) == 1
+    assert result.failures[0].error_type == "ModuleNotFoundError"
 
 
 def test_runtime_error_is_not_import_error(tmp_path: Path):
@@ -33,4 +32,4 @@ def test_runtime_error_is_not_import_error(tmp_path: Path):
 
     result = check_directory(tmp_path)
 
-    assert result.success
+    assert result.failures == []
