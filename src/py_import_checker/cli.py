@@ -75,21 +75,20 @@ def main(argv: list[str] | None = None) -> int:
 
     print_report(report)
 
-    if args.fix or args.dry_run:
-        if not report.ok:
+    if (args.fix or args.dry_run) and not report.ok:
+        print()
+        fix_report = fix_imports(report, dry_run=args.dry_run)
+        print_fix_report(fix_report, dry_run=args.dry_run)
+        if not args.dry_run and fix_report.ok and fix_report.installed:
+            # Re-scan after fix to confirm resolution.
             print()
-            fix_report = fix_imports(report, dry_run=args.dry_run)
-            print_fix_report(fix_report, dry_run=args.dry_run)
-            if not args.dry_run and fix_report.ok and fix_report.installed:
-                # Re-scan after fix to confirm resolution.
-                print()
-                report = check_directory(
-                    root,
-                    extra_paths=[Path(p) for p in args.src],
-                )
-                print_report(report)
-                return 0 if report.ok else 1
-            return 0 if fix_report.ok else 1
+            report = check_directory(
+                root,
+                extra_paths=[Path(p) for p in args.src],
+            )
+            print_report(report)
+            return 0 if report.ok else 1
+        return 0 if fix_report.ok else 1
 
     return 0 if report.ok else 1
 

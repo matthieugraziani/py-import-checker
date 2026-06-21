@@ -5,11 +5,8 @@ from __future__ import annotations
 from pathlib import Path
 from unittest.mock import MagicMock, patch
 
-import pytest
-
 from py_import_checker.checker import FailedImport, ScanReport, check_directory
 from py_import_checker.fixer import FixReport, fix_imports, print_fix_report
-
 
 # ---------------------------------------------------------------------------
 # FailedImport.missing_module
