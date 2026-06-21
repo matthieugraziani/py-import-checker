@@ -14,6 +14,22 @@ class FailedImport:
     error_type: str
     message: str
 
+    @property
+    def missing_module(self) -> str | None:
+        """Extract the top-level package name from a ModuleNotFoundError message.
+
+        Returns None for non-import errors or unrecognised message formats.
+        """
+        if self.error_type not in ("ModuleNotFoundError", "ImportError"):
+            return None
+        # "No module named 'foo.bar'" → "foo"
+        import re
+
+        match = re.search(r"No module named '([^']+)'", self.message)
+        if match:
+            return match.group(1).split(".")[0]
+        return None
+
 
 @dataclass
 class ScanReport:

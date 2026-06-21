@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.2.5] — 2026-06-21
+
+### Added
+
+- `--fix` flag: automatically installs missing packages detected during the scan via pip, then re-scans to confirm resolution.
+- `--dry-run` flag: previews which packages would be installed by `--fix` without any side-effects.
+- `FailedImport.missing_module` property: extracts the top-level package name from a `ModuleNotFoundError` message.
+- New `fixer` module (`py_import_checker.fixer`) exposing `fix_imports()` and `FixReport` for programmatic use.
+
 ## [Unreleased]
 
 ## [0.2.3] — 2026-06-14

@@ -29,6 +29,8 @@ It loads Python files using the standard library and reports import failures bef
 - Ignores runtime errors raised during module execution
 - Skips virtual environments and build directories
 - Works in CI with meaningful exit codes
+- **Auto-fix** broken imports with `--fix` (installs missing packages via pip)
+- **Dry-run** preview with `--dry-run` (shows what would be installed, no side-effects)
 
 ## Installation
 
@@ -46,6 +48,22 @@ py-import-checker . --src src/ --src lib/
 py-import-checker . --glob "app/**/*.py"
 py-import-checker . --verbose
 ```
+
+### Auto-fix
+
+Install every missing package detected during the scan:
+
+```bash
+py-import-checker . --fix
+```
+
+Preview what would be installed without touching the environment:
+
+```bash
+py-import-checker . --dry-run
+```
+
+After a successful `--fix`, the tool re-scans automatically to confirm all imports are resolved.
 
 ## Python API
 
@@ -69,7 +87,7 @@ if not result.success:
 ```yaml
 repos:
   - repo: https://github.com/matthieugraziani/py-import-checker
-    rev: v0.2.4
+    rev: v0.2.5
     hooks:
       - id: py-import-checker
         args: [--src, src/]
